@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Calculadora - Valor futuro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <link rel="glossary" title="Glossaire" href="/es/glossaire.php"> -->
+    <!--[if lt IE 9]> <script src="/scripts/vendor/respond.min.js"></script> <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/scripts/jquery/jquery-ui-1.11.2/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="/scripts/jquery/fancybox-2.1.5/jquery.fancybox.css">
+            <script>
+            var cfp = cfp || {};
+
+            cfp.settings = {
+                GA_id: 'UA-141875-13',
+                language: 'es'
+            };
+        </script>
+                <script>
+            var cfp = cfp || {};
+
+            cfp.user = {
+                country: 'CO',
+                language: 'es',
+                currency: '$'
+            };
+
+            // older pages may still access these global variables, delete when possible
+            var country = 'CO';
+            var language = 'es';
+            var currency = '$';
+
+        </script>
+        <script src="//www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>        
+<div class="bg">
+    <div class="main">
+
+<div class="content">    
+        
+    <div class="content-main-full">
+            <form name="investments_value">
+
+                <div class="center-block" style="max-width: 400px;">
+
+                    <div class="frame-form">
+
+                        <table class="form">
+                            <tr class="rowlight">
+                                <td><label for="initial_investment">Inversión inicial</label>
+                                </td>
+                                <td width="140"><input value="2000" name="initial_investment" id="initial_investment" type="text" size="15" class="user_input js_update_form"></td>
+                            </tr>
+                            <tr class="rowdark">
+                                <td><label for="regular_addition">Contribución adicional regular</label>
+                                </td>
+                                <td><input value="250" name="regular_addition" id="regular_addition" type="text" size="10" class="user_input js_update_form"></td>
+                            </tr>
+                            <tr class="rowlight">
+                                <td><label for="addition_period">Período</label>
+                                </td>
+                                <td>
+
+                                    <select name="addition_period" class="user_input js_update_form">
+                                        <option value="weekly">Semanal</option>
+                                        <option value="bi_weekly">Dos veces por semana</option>
+                                        <option value="monthly">Mensual</option>
+                                        <option value="quarterly">Trimestral</option>
+                                        <option value="semi_annually">Semi anualmente</option>
+                                        <option value="yearly">Anual</option>
+                                    </select>
+
+                                </td>
+                            </tr>
+                            <tr class="rowdark">
+                                <td><label for="interest_rate">Tasa de interés</label>
+                                </td>
+                                <td><input value="5%" name="interest_rate" id="interest_rate" type="text" size="3" class="user_input js_update_form"> %</td>
+                            </tr>
+                            <tr class="rowlight">
+                                <td><label for="term_years">Término</label>
+                                </td>
+                                <td><input value="4" name="term_years" id="term_years" type="text" size="3" class="user_input js_update_form"> años</td>
+                            </tr>
+                            <tr class="rowdark">
+                                <td><label for="interest_compounded_type">Intereses compuestos</label>
+                                </td>
+                                <td>
+
+                                    <select name="interest_compounded_type" class="user_input js_update_form">
+                                        <option value="monthly">Mensual</option>
+                                        <option value="quarterly">Trimestral</option>
+                                        <option value="semi_annually">Semi anualmente</option>
+                                        <option value="yearly">Anual</option>
+                                    </select>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="frame-form" style="margin-top: 20px;">
+                        <table class="form">
+                            <tr class="rowtotal">
+                                <td><label for="amount_invested">Cantidad invertida</label>
+                                </td>
+                                <td width="140"><input value="" name="amount_invested" id="amount_invested" type="text" size="15" class="invisible" readonly="readonly">  $</td>
+                            </tr>
+                            <tr class="rowtotal">
+                                <td><label for="total_value_initial_investment">Valor total de la inversión inicial</label>
+                                </td>
+                                <td width="140"><input value="" name="total_value_initial_investment" id="total_value_initial_investment" type="text" size="15" class="invisible" readonly="readonly">  $</td>
+                            </tr>
+                            <tr class="rowtotal">
+                                <td><label for="total_value_periodic_addition">Valor total de la suma periódica</label>
+                                </td>
+                                <td width="140"><input value="" name="total_value_periodic_addition" id="total_value_periodic_addition" type="text" size="15" class="invisible" readonly="readonly">  $</td>
+                            </tr>
+                            <tr class="rowblack">
+                                <td><label for="total_value_investment">Valor total de la inversión</label>
+                                </td>
+                                <td width="140"><input value="" name="total_value_investment" id="total_value_investment" type="text" size="15" class="invisible" readonly="readonly">  $</td>
+                            </tr>
+                            <tr class="rowblack">
+                                <td><label for="total_interest_earned">Total de intereses ganados</label>
+                                </td>
+                                <td width="140"><input value="" name="total_interest_earned" id="total_interest_earned" type="text" size="15" class="invisible" readonly="readonly">  $</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-button"><input type="button" value="Restaurar los valores iniciales" class="outward js_reset_form"></div>
+
+         
+
+                <h2 class="chart_title">Gráfico de crecimiento de la inversión</h2>
+
+                <div class="chart"><div id="chart_growth" style="height: 500px;"></div></div>
+
+                
+                <div class="mobile-user-note screen-small-show"><strong>Usuarios de dispositivos móviles:</strong> pueden desplazar la tabla horizontalmente</div>
+
+                <div class="frame-form frame-form-scroll">
+
+                    <div class="figures-header-fixed">
+                        <table width="100%" class="figures">
+                            <tr>
+                                <th width="50">Años</th>
+                                <th width="13%">Inversión anual</th>
+                                <th width="13%">Inversión acumulada</th>
+                                <th width="13%">Interés anual</th>
+                                <th width="13%">Total de intereses ganados</th>
+                                <th width="13%">Valor de la inversión inicial</th>
+                                <th width="13%">Valor de la suma</th>
+                                <th>Valor total de la inversión</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="schedule" class="figures-scroll">&nbsp;</div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div> <!-- #content-main-full -->
+
+  </div> <!-- #content -->
+ <!-- #bottom -->
+
+    </div> <!-- #main -->
+</div> <!-- #bg -->
+
+
+<a href="/ztob.php" rel="nofollow" class="sprite-empty">&nbsp;</a>
+
+<!-- ========================================================================= -->
+
+<script src="/scripts/jquery/jquery.min.js"></script>
+<script src="/scripts/jquery/jquery-ui-1.11.2/jquery-ui.min.js"></script>
+<script src="/scripts/jquery/jquery.hoverIntent.minified.js"></script>
+<script src="/scripts/jquery/fancybox-2.1.5/jquery.fancybox.pack.js"></script>
+<script src="/scripts/main.min.js"></script>
+
+<!-- ========================================================================= -->
+
+<script>
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {packages: ['corechart'], 'language': language});
+</script>
+<script src="/scripts/calculators.min.js"></script>
+<script src="/scripts/calculate-future-value-investments-compound-interest.min.js"></script>
+<script>
+$(document).ready(function() {
+
+    cfp.calculators.init(cfp.user);
+
+    cfp.investments_value.init(cfp.user, cfp.calculators, document.investments_value);
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(function() {
+        cfp.investments_value.show_chart_growth();
+    });
+
+    $('.js_update_form', cfp.investments_value.dom_form).change(function(event) {
+        cfp.investments_value.update_form(this);
+    });
+
+    $('.js_update_form', cfp.investments_value.dom_form).click(function(event) {
+        cfp.investments_value.update_form(this);
+    });
+
+    $('.js_reset_form', cfp.investments_value.dom_form).click(function(event) {
+        if ( cfp.calculators.getConfirmation() ) cfp.investments_value.reset_form();
+    });
+
+    //http://fancybox.net/howto
+    $('a.inline_box').fancybox();
+
+});
+</script>
+
+</body>
+</html>
